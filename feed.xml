@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+    <title>Didier Portfolio</title>
+    <link href="https://BioloGIS-DQ.github.io/portfolio/feed.xml" rel="self" />
+    <link href="https://BioloGIS-DQ.github.io/portfolio" />
+    <updated>2026-09-16T23:01:00-05:00</updated>
+    <author>
+        <name>Didier Alonso Quimbay Galindo</name>
+    </author>
+    <id>https://BioloGIS-DQ.github.io/portfolio</id>
+
+    <entry>
+        <title>🦇🌳 Conectando las islas verdes de Bogotá: ¿Existen corredores de vuelo urbanos para murciélagos?</title>
+        <author>
+            <name>Didier Alonso Quimbay Galindo</name>
+        </author>
+        <link href="https://BioloGIS-DQ.github.io/portfolio/portfolio/conectando-las-islas-verdes-de-bogota-existen-corredores-de-vuelo-urbanos-para-murcielagos/"/>
+        <id>https://BioloGIS-DQ.github.io/portfolio/portfolio/conectando-las-islas-verdes-de-bogota-existen-corredores-de-vuelo-urbanos-para-murcielagos/</id>
+        <media:content url="https://BioloGIS-DQ.github.io/portfolio/media/posts/7/Figure05_ICC_BOG-2.png" medium="image" />
+            <category term="Portfolio"/>
+            <category term="2025"/>
+
+        <updated>2026-09-16T23:01:00-05:00</updated>
+            <summary type="html">
+                <![CDATA[
+                        <img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/7/Figure05_ICC_BOG-2.png" alt="" />
+                    Modelando la conectividad ecológica dentro de la ciudad de Bogotá para el paso seguro de fauna en sus parques Rol:&nbsp;Biólogo y Analista espacial (SIG)Herrameintas: R,&nbsp;Makurhini, QgisEnfoque: Ecología urbana, Conservación, Planeación urbana 🎯 El desafío Bogotá es una ciudad que se ha expandido bastante en múltiples&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <p><img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/7/Figure05_ICC_BOG-2.png" class="type:primaryImage" alt="" /></p>
+                
+    <h2 id="modelando-la-conectividad-ecologica-dentro-de-la-ciudad-de-bogota-para-el-paso-seguro-de-fauna-en-sus-parques">
+      Modelando la conectividad ecológica dentro de la ciudad de Bogotá para el paso seguro de fauna en sus parques
+    </h2>
+<hr class="separator separator--dots" />
+
+  <ul>
+    <li><b>Rol:</b>&nbsp;Biólogo y Analista espacial (SIG)</li><li><b>Herrameintas</b>: R,&nbsp;<code>Makurhini</code>, Qgis</li><li><b>Enfoque</b>: Ecología urbana, Conservación, Planeación urbana</li>
+  </ul>
+<hr class="separator separator--dots" />
+
+    <h3 id="el-desafio">
+      🎯 El desafío
+    </h3>
+
+  <p>
+    Bogotá es una ciudad que se ha expandido bastante en múltiples direcciones desde su fundación. Ha absorbido y modificado distintos municipios y zonas, y progresivamente modificando fuertemente la estructura ecológica natural de "La Sabana de Bogotá". Los parques distritales, zonas verdes urbanas y humedales son los pocos sectores naturales que quedan dentro de la matriz de la ciudad. Estos sitios a veces quedan aisladas volviéndose efectivamente "<i>islas verdes</i>" en un mar de concreto.
+  </p>
+
+  <p>
+    Para los murciélagos urbanos - un actor natural polinizador, y controlador de insectos, que a veces la misma ciudad cree que no existe en su interior - enfrenta un gran desafío al tener que navegar dentro de este complejo ambiente. La pregunta no es sí existen bosques o zonas arboladas que los puedan albergar, sino si estas <i>islas verdes</i> estarán lo suficientemente cerca para ser consideradas como un <strong>paso</strong> o <strong>refugio</strong> considerando los rangos de vuelo que tienen&nbsp;los murciélagos urbanos.
+  </p>
+
+    <h3 id="mi-aproximacion">
+      🔍 Mi aproximación
+    </h3>
+
+  <p>
+    Para poder comprender y explorar esta pregunta necesitamos ver la ciudad desde la óptica de murciélagos.
+  </p>
+
+  <ul>
+    <li><b>¿Que tanta distancia&nbsp;puede&nbsp;volar un murciélago?&nbsp;</b>(<i>Definiendo Parámetros</i>)<i>. </i>Mirando literatura se puede inferir algunos rangos de distancia de vuelos que tienen algunas especies. Con esto definí la distancia máxima que podría volar un murciélago.</li><li><b>¿Que herramienta permite modelar la conectividad?</b> <i>(Modelado espacial)</i>. Usé el paquete de R <code>Makurhini</code> para poder realizar un análisis de conectividad mediante el <u>índice compuesto de conectividad</u> (ICC). De esta manera es posible estimar la conectividad teórica entre las zonas naturales y semi-naturales de Bogotá. Y así intentar identificar los parches tipo "<i>stepping stones</i>" que los murciélagos podrían utilizar para navegar dentro de la ciudad.</li><li><b>¿Cómo se puede entender este análisis?</b> <i>(Interpretación y traducción de los datos)</i> Procesé el resultado del análisis generando un mapa que permite identificar cuales son los parches con mayor relevancia y conectividad estructural. Esto es un insumo para poder interpretar la ciudad desde los ojos de los murciélagos.</li>
+  </ul>
+<pre class="line-numbers  language-html"><code># Cómo se generó el plot
+ggplot() +
+  geom_sf(data = landscapeBOG, fill = NA, color = "#25e962", linewidth = 2.5) +
+  geom_sf(data = UrbanBOG_REF, fill = NA, color = "gray10", linewidth = 0.1) +
+  geom_sf(data = resuTB, aes(fill = IComp_q), color = NA, size = 0.1) +
+  scale_fill_brewer(
+    palette = "RdYlGn",
+    direction = 1,
+    name = "IComp (jenks)") +
+  theme_minimal() +
+  labs(title = "Índice de Conectividad Compuesto",
+       fill = "IComp") +
+  theme(legend.position = "right")</code></pre>
+
+    <h3 id="el-resultado">
+      💡 El resultado
+    </h3>
+
+  <p>
+    Gracias a esta aproximación puedo generar un mapa basado en datos que nos permite reinterpretar nuestra ciudad sobre relaciones que quizás pueden pasar desapercibidas para muchos. Es esencial entender como nosotros somos actores y partícipes en el gran sistema ecológico de la ciudad.
+  </p>
+
+    <figure id="ICC_Plot" class="post__image post__image--center">
+      <img loading="lazy" src="https://BioloGIS-DQ.github.io/portfolio/media/posts/7/Figure05_ICC_BOG.png" height="712" width="811" alt=""  sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://BioloGIS-DQ.github.io/portfolio/media/posts/7/responsive/Figure05_ICC_BOG-xs.png 640w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/7/responsive/Figure05_ICC_BOG-sm.png 768w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/7/responsive/Figure05_ICC_BOG-md.png 1024w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/7/responsive/Figure05_ICC_BOG-lg.png 1366w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/7/responsive/Figure05_ICC_BOG-xl.png 1600w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/7/responsive/Figure05_ICC_BOG-2xl.png 1920w">
+      <figcaption>Índice de Conectividad Compuesto (ICC) de las áreas naturales y seminaturales de la ciudad de Bogotá D.C.</figcaption>
+    </figure>
+
+    <h3 id="que-podemos-ver">
+      ✓ ¿Qué podemos ver?
+    </h3>
+
+  <ul>
+    <li>La ciudad tiene una conectividad muy fragmentada para los murciélagos. Son los parques urbanos y reservas naturales del Norte de la ciudad las que exhiben mayor conectividad.&nbsp;</li><li>Los cerros orientales son el eje articulador para que este grupo pueda atravesar la ciudad en sentido N a S.</li>
+  </ul>
+
+    <h3 id="necesitas-mas-detalles">
+      🕮 ¿Necesitas más detalles?
+    </h3>
+
+  <p>
+    Puedes consultar un <a href="https://redbioma.org/projects/2025-08-connectivity/ciudad-bogota-colombia.html" target="_blank" rel="sponsored">documento técnico</a> (No artículo científico revisado por pares, aún.) para tener más detalles.
+  </p>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>🗺 Cartografía para los viajes de Thomas R. Defler</title>
+        <author>
+            <name>Didier Alonso Quimbay Galindo</name>
+        </author>
+        <link href="https://BioloGIS-DQ.github.io/portfolio/portfolio/cartografia-para-los-viajes-de-thomas-r-defler/"/>
+        <id>https://BioloGIS-DQ.github.io/portfolio/portfolio/cartografia-para-los-viajes-de-thomas-r-defler/</id>
+        <media:content url="https://BioloGIS-DQ.github.io/portfolio/media/posts/8/Map01_Trip_DQ13.png" medium="image" />
+            <category term="Portfolio"/>
+            <category term="2025"/>
+
+        <updated>2026-03-17T00:01:05-05:00</updated>
+            <summary type="html">
+                <![CDATA[
+                        <img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/8/Map01_Trip_DQ13.png" alt="" />
+                    Trazando mapas sobre 20 años de trabajo en los llanos orientales y el Vichada colombiano Cargo: Diseñador cartográficoHerramientas: QGISEntregable: Serie de tres (3) mapas para publicación y maquetación editorial 🎯 El desafío Crear una serie de mapas divulgativos que retraten los viajes y expediciones hechos&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <p><img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/8/Map01_Trip_DQ13.png" class="type:primaryImage" alt="" /></p>
+                
+    <h3 id="trazando-mapas-sobre-20-anos-de-trabajo-en-los-llanos-orientales-y-el-vichada-colombiano">
+      Trazando mapas sobre 20 años de trabajo en los llanos orientales y el Vichada colombiano
+    </h3>
+<hr class="separator separator--dots" />
+
+  <ul>
+    <li><b>Cargo</b>: Diseñador cartográfico</li><li><b>Herramientas</b>: <a href="https://qgis.org/download/" target="_blank">QGIS</a></li><li><b>Entregable</b>: Serie de tres (3) mapas para publicación y maquetación editorial</li>
+  </ul>
+<hr class="separator separator--dots" />
+
+    <h3 id="el-desafio">
+      🎯 El desafío
+    </h3>
+
+  <p>
+    Crear una serie de mapas divulgativos que retraten los viajes y expediciones hechos por el Profesor Thomas R. Defler en la región del Vichada colombiano, a través de ríos, sabanas inundables y selvas.
+  </p>
+
+    <h3 id="el-proceso">
+      🖉 El proceso
+    </h3>
+
+  <p>
+    Sinteticé las rutas descritas por el Profesor Defler a través de la región utilizando distintas fuentes cartográficas de referencia (IGAC, DANE, MapBiomas). Recreé las rutas terrestres y ribereñas recorridas en más de 20 años según la dirección del Profesor. Usé simbologías sencillas y limpias para facilitar el acceso a la información para un público no técnico. 
+  </p>
+
+    <h3 id="el-impacto">
+      🗺 El impacto
+    </h3>
+
+  <p>
+    Mis mapas logran visualizar particularidades de los viajes de investigación del Profesor Defler, y permiten ubicar el contexto espacial y natural del gradiente sabana orinocence y selva amazónica que exploró el profesor. Los mapas son un complemento visual del texto y narrativa principal del libro.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://BioloGIS-DQ.github.io/portfolio/media/posts/8/Map03_BiomesExplore_DQ21-2.png" height="2480" width="1748" alt=""  sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://BioloGIS-DQ.github.io/portfolio/media/posts/8/responsive/Map03_BiomesExplore_DQ21-2-xs.png 640w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/8/responsive/Map03_BiomesExplore_DQ21-2-sm.png 768w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/8/responsive/Map03_BiomesExplore_DQ21-2-md.png 1024w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/8/responsive/Map03_BiomesExplore_DQ21-2-lg.png 1366w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/8/responsive/Map03_BiomesExplore_DQ21-2-xl.png 1600w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/8/responsive/Map03_BiomesExplore_DQ21-2-2xl.png 1920w">
+      <figcaption>Mapa con un vistazo a la región del Vichada y el Oriente Colombiano. Los tonos representan la composición de coberturas de Selva (gris oscuro) y sabana orinocense (blanco)</figcaption>
+    </figure>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>🖨️ Topografía Táctil: Mapeando las aguas de Bogotá</title>
+        <author>
+            <name>Didier Alonso Quimbay Galindo</name>
+        </author>
+        <link href="https://BioloGIS-DQ.github.io/portfolio/portfolio/topografia-tactil-mapeando-las-aguas-de-bogota/"/>
+        <id>https://BioloGIS-DQ.github.io/portfolio/portfolio/topografia-tactil-mapeando-las-aguas-de-bogota/</id>
+        <media:content url="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/HillshadeFocus_-2.png" medium="image" />
+            <category term="Portfolio"/>
+            <category term="2025"/>
+
+        <updated>2026-03-18T17:53:26-05:00</updated>
+            <summary type="html">
+                <![CDATA[
+                        <img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/HillshadeFocus_-2.png" alt="" />
+                    Un mapa educativo, interactivo a gran escala de los ríos y humedales de Bogotá para el Museo de Historia Natural (UNAL) Rol:&nbsp;Especialista SIG, Cartógrafo didácticoHerramientas: Qgis, Datos Abiertos Bogotá, Impresión a gran formatoÉnfasis: Material didáctico, pedagogía, mapas hidrológicos 🎯 El desafío Entender los sistemas hídricos&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <p><img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/HillshadeFocus_-2.png" class="type:primaryImage" alt="" /></p>
+                
+    <h3 id="un-mapa-educativo-interactivo-a-gran-escala-de-los-rios-y-humedales-de-bogota-para-el-museo-de-historia-natural-unal">
+      Un mapa educativo, interactivo a gran escala de los ríos y humedales de Bogotá para el Museo de Historia Natural (UNAL)
+    </h3>
+<hr class="separator separator--dots" />
+
+  <ul>
+    <li><b>Rol</b>:&nbsp;Especialista SIG, Cartógrafo didáctico</li><li><b>Herramientas</b>: Qgis, Datos Abiertos Bogotá, Impresión a gran formato</li><li><b>Énfasis</b>: Material didáctico, pedagogía, mapas hidrológicos</li>
+  </ul>
+<hr class="separator separator--dots" />
+
+    <h2 id="el-desafio">
+      🎯 El desafío
+    </h2>
+
+  <p>
+    Entender los sistemas hídricos de la ciudad no es una tarea de memorizar nombres de ríos y humedales, sino una tarea que requiere involucrase de manera activa y directa. El museo de Historia Natural (MHN) en su exposición temporal "<i>Chucuas bogotanas</i>" en el mes de los humedales necesitaba un material didáctico que no solo fuera visualmente agradable, sino que también fuera físicamente interactivo. Necesitaban un&nbsp;espacio para que el público pudiera intuitivamente&nbsp;navegar, reconocer su territorio, dejar notas y compartir sus propias historias y experiencias en un contexto geográfico.
+  </p>
+
+    <h3 id="mi-aproximacion-tecnica-y-pedagogica">
+      🖉 Mi aproximación técnica y pedagógica
+    </h3>
+
+  <p>
+    Para crear un mapa que invitara la gente a tocarlo e interactuar, fue necesario incorporar una estrategia distinta a mapas "planos" y algunos aspectos de la cartografía tradicional y académica.
+  </p>
+
+  <ul>
+    <li><b>Diseño para la intuición</b>: Utilicé Qgis para generar un mapa de alto de talle con efectos de sombreado 3D (Hillshade). Al exagerar el relieve y sombras la topografía de Bogotá y sus alrrededores se vuelve mucho más reconocibles. Esto permite que tanto niños, jovenes y adutos, puedan ubicarse en su paisaje.</li><li><b>Procesamiento de Datos Open Source</b>:&nbsp;Utilizando set de datos libres ofertados por distintas entidades (Datos Abiertos Bogotá), generé una representación&nbsp; didáctica y entendible de los humedales, ríos, vías principales y sitios de interés de la ciudad. Todo manteniendo el rigor y precisión en un mapa de gran escala.</li><li><b>Canvas Didáctico:</b>&nbsp;Diseñé&nbsp;&nbsp;la simbología y maquetación específicamente para que el mapa fuera&nbsp;impreso en gran formato industrial (2.0 m × 1.45 m), y resistente al tacto y transporte. Colores neutros y espacio negativo se implementó al interior de la ciudad para permitir que escritura con marcador o notas adhesivas pudieran verse fácilmente. Todo esto permite que el mapa se convierta en un espacio colaborativo y de diálogo.<br></li>
+  </ul>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/HillshadeFocus_.png" height="2072" width="2477" alt=""  sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/HillshadeFocus_-xs.png 640w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/HillshadeFocus_-sm.png 768w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/HillshadeFocus_-md.png 1024w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/HillshadeFocus_-lg.png 1366w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/HillshadeFocus_-xl.png 1600w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/HillshadeFocus_-2xl.png 1920w">
+      <figcaption>Detalle y acercamiento a la estrategia de manejo de simbología del relieve, ríos, humedales y carreteras</figcaption>
+    </figure>
+
+    <h3 id="el-resultado">
+      🗺 El Resultado
+    </h3>
+
+  <p>
+    Un mapa en gran formato, táctil instalado como un póster integrándose en la exposición temporal "<i>Chucuas QQQ</i>" del MHN de la Universidad Nacional de Colombia. El mapa fue efectivo en unir el rigor científico y técnico con la didáctica y espacios comunitarios, conviertiendose así en un insumo para la divulgación científica
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/FullSize_.png" height="11417" width="15748" alt=""  sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/FullSize_-xs.png 640w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/FullSize_-sm.png 768w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/FullSize_-md.png 1024w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/FullSize_-lg.png 1366w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/FullSize_-xl.png 1600w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/FullSize_-2xl.png 1920w">
+      <figcaption>Diseño de mapa final para impresión (2000 × 1450 mm)</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/IMG_9584-2.JPG" height="2848" width="4272" alt=""  sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/IMG_9584-2-xs.JPG 640w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/IMG_9584-2-sm.JPG 768w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/IMG_9584-2-md.JPG 1024w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/IMG_9584-2-lg.JPG 1366w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/IMG_9584-2-xl.JPG 1600w ,https://BioloGIS-DQ.github.io/portfolio/media/posts/12/responsive/IMG_9584-2-2xl.JPG 1920w">
+      <figcaption>El montaje del mapa en el Museo de Historial Natural (MHN) siendo utilizado como elemento de interacción</figcaption>
+    </figure>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>📲 Aplicación móvil en Qfield: Arboretum UNAL interactivo</title>
+        <author>
+            <name>Didier Alonso Quimbay Galindo</name>
+        </author>
+        <link href="https://BioloGIS-DQ.github.io/portfolio/portfolio/propuesta-app-arboretum-unal-interactivo/"/>
+        <id>https://BioloGIS-DQ.github.io/portfolio/portfolio/propuesta-app-arboretum-unal-interactivo/</id>
+        <media:content url="https://BioloGIS-DQ.github.io/portfolio/media/posts/11/Portfolio_Screenshot01.png" medium="image" />
+            <category term="Portfolio"/>
+            <category term="2025"/>
+
+        <updated>2026-03-17T00:33:14-05:00</updated>
+            <summary type="html">
+                <![CDATA[
+                        <img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/11/Portfolio_Screenshot01.png" alt="" />
+                    Generando un prototipo de aplicación para móvil (Qfield) para navegar interactivamente en el arboretum de la Universidad Nacional de Colombia
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <p><img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/11/Portfolio_Screenshot01.png" class="type:primaryImage" alt="" /></p>
+                
+    <h3 id="generando-un-prototipo-de-aplicacion-para-movil-qfield-para-navegar-interactivamente-en-el-arboretum-de-la-universidad-nacional-de-colombia">
+      Generando un prototipo de aplicación para móvil (Qfield) para navegar interactivamente en el arboretum de la Universidad Nacional de Colombia
+    </h3>
+
+  <p>
+    
+  </p>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>🖆 Mapas académicos para varios miembros del Laboratorio de Ecología de Mamíferos Neotropicales (EFNN)</title>
+        <author>
+            <name>Didier Alonso Quimbay Galindo</name>
+        </author>
+        <link href="https://BioloGIS-DQ.github.io/portfolio/portfolio/mapas-para-publicaciones-academicas-una-ayuda-a-miembros-del-laboratorio-de-ecologia-de-mamiferos-neotropicales-efnn/"/>
+        <id>https://BioloGIS-DQ.github.io/portfolio/portfolio/mapas-para-publicaciones-academicas-una-ayuda-a-miembros-del-laboratorio-de-ecologia-de-mamiferos-neotropicales-efnn/</id>
+        <media:content url="https://BioloGIS-DQ.github.io/portfolio/media/posts/10/Print4_UbicationMap.png" medium="image" />
+            <category term="Portfolio"/>
+            <category term="2024"/>
+
+        <updated>2026-03-17T00:37:32-05:00</updated>
+            <summary type="html">
+                <![CDATA[
+                        <img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/10/Print4_UbicationMap.png" alt="" />
+                    Generando mapas para distintos trabajos académicos de pregrado, doctorado y publicaciones académicas Genere mapas Mapas para documento de Doctorado: Nathalia QQQQ Junto con NAtalhia le puedo clabroarpara genear los mapas para su trabajo de doctorado titulado "" COnsultao aquí.Puntualmten estos maps se revisaron varias veces,&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <p><img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/10/Print4_UbicationMap.png" class="type:primaryImage" alt="" /></p>
+                
+    <h3 id="generando-mapas-para-distintos-trabajos-academicos-de-pregrado-doctorado-y-publicaciones-academicas">
+      Generando mapas para distintos trabajos académicos de pregrado, doctorado y publicaciones académicas
+    </h3>
+
+  <p>
+    Genere mapas
+  </p>
+
+    <h3 id="mapas-para-documento-de-doctorado-nathalia-qqqq">
+      Mapas para documento de Doctorado: Nathalia QQQQ
+    </h3>
+
+  <ul>
+    <li>Junto con NAtalhia le puedo clabroarpara genear los mapas para su trabajo de doctorado titulado "" COnsultao aquí.</li><li>Puntualmten estos maps se revisaron varias veces, la idea es poder lograr el imacto estético y acaṕdemicso reuqieriodo por Natahlia para tan importnte ocasión.</li>
+  </ul>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="" height="" width="" alt=""  data-is-external-image="true">
+      
+    </figure>
+
+    <h3 id="mapas-para-articulo-maria-alejandra-perdomo-gaitan">
+      Mapas para artículo: Maria Alejandra Perdomo Gaitan
+    </h3>
+
+  <ul>
+    <li>Mapitas para María y su trabajho "". Puedes cosultarlo aquí: LINK</li><li>Con María armamos una serie de mapas de ubicación sobre sus localidades de muestras de guano de cuevas y cavernas en Colombia.</li>
+  </ul>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="" height="" width="" alt=""  data-is-external-image="true">
+      
+    </figure>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>🦇🕮 Registros históricos de murciélagos de Bogotá: ¿Será que existen rutas de vuelo entre estos registros?</title>
+        <author>
+            <name>Didier Alonso Quimbay Galindo</name>
+        </author>
+        <link href="https://BioloGIS-DQ.github.io/portfolio/portfolio/registros-historicos-de-murcielagos-de-bogota-sera-que-existen-rutas-de-vuelo-entre-estos-registros/"/>
+        <id>https://BioloGIS-DQ.github.io/portfolio/portfolio/registros-historicos-de-murcielagos-de-bogota-sera-que-existen-rutas-de-vuelo-entre-estos-registros/</id>
+        <media:content url="https://BioloGIS-DQ.github.io/portfolio/media/posts/9/Figure2_03.png" medium="image" />
+            <category term="Portfolio"/>
+            <category term="2023"/>
+
+        <updated>2026-03-17T00:09:30-05:00</updated>
+            <summary type="html">
+                <![CDATA[
+                        <img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/9/Figure2_03.png" alt="" />
+                    Reconstruyendo los posibles rutas de vuelo de los murciélagos urbanos a partir de los registros históricos georeferenciados
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <p><img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/9/Figure2_03.png" class="type:primaryImage" alt="" /></p>
+                
+    <h3 id="reconstruyendo-los-posibles-rutas-de-vuelo-de-los-murcielagos-urbanos-a-partir-de-los-registros-historicos-georeferenciados">
+      Reconstruyendo los posibles rutas de vuelo de los murciélagos urbanos a partir de los registros históricos georeferenciados
+    </h3>
+
+  <p>
+    
+  </p>
+            ]]>
+        </content>
+    </entry>
+</feed>
