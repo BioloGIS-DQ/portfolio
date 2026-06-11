@@ -282,7 +282,7 @@ ggplot() +
         </content>
     </entry>
     <entry>
-        <title>🗺🖆 Mapas académicos para varios miembros del Laboratorio de Ecología y Evolución de Mamíferos Neotropicales (EFNN)</title>
+        <title>🗺🖆 Mapas académicos para el Laboratorio de Ecología y Evolución de Mamíferos Neotropicales (EFNN)</title>
         <author>
             <name>Didier Alonso Quimbay Galindo</name>
         </author>
@@ -292,7 +292,7 @@ ggplot() +
             <category term="Portfolio"/>
             <category term="2024"/>
 
-        <updated>2026-06-11T11:13:18-05:00</updated>
+        <updated>2026-06-11T13:24:55-05:00</updated>
             <summary type="html">
                 <![CDATA[
                         <img src="https://BioloGIS-DQ.github.io/portfolio/media/posts/10/Print4_UbicationMap.png" alt="" />
